@@ -1,0 +1,12 @@
+.delete{
+    padding-top: 3px;
+}
+
+.delete img{
+    height: 20px;
+    width: 20px;
+}
+
+.delete img:hover {
+    box-shadow: 0px 0px 5px black ;
+}

@@ -1,17 +1,47 @@
-import React from 'react';
+import React,{ useState } from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import Column from './components/Column/Column';
+import Card from './components/Card/Card';
+import Header from './components/Header/Header';
+import Button from './components/Button/Button';
+import AddField from './components/AddField/AddField';
 import * as serviceWorker from './serviceWorker';
+import logo from './logo.svg';
+import './index.css';
+
+function Trello(){
+    const [header,headerSet] = useState('Example');
+    const [items,itemsSet] = useState([]);
+    function addItem(newTodo){
+      itemsSet([...items,
+        {
+          text: newTodo,
+          id: items.length+1
+        }
+      ]);
+      console.log(items);
+    }
+    return (
+        <div className="wrapper">
+            <Column>
+                <Header value={header}/>
+                <div className="overflowCards">
+                  {items.map((curr) => 
+                    (<Card value={curr.text}/>)
+                  )}
+                </div>
+                <AddField createNewTodo={(text)=> addItem(text)} buttonText="Add Card" panelText="+ Add a card"/>
+            </Column>
+        </div>
+    );
+}
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Trello />
   </React.StrictMode>,
   document.getElementById('root')
 );
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
+
