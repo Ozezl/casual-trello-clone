@@ -1,6 +1,26 @@
 .header{
     margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
 }
-.header h3{
+
+.header__input{
+    display: block;
+    width: 100%;
+}
+.header__input input{
+    font-size: 1.17em ;
+    font-weight: bolder;
+    width: 97%;
+    border-width: 0px;
+    padding: 2px 3px;
+    border-radius: 3px;
+}
+
+.header__input input:focus{
+   box-shadow: 0 0 0 2px #A1B1D4;
+}
+
+.header__Text h3{
     margin: 0px;
 }

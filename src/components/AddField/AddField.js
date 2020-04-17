@@ -13,14 +13,21 @@ function AddField(props){
         :
         showSet(true)
     }
+
     function changeHandler(e){
         textSet(e.target.value);
     }
+    
     return(show?
         <div className="column-hiddenDescription">
             <textarea onChange={changeHandler} placeholder="Type your text here..."></textarea>
             <div className="column-hiddenDescription-flexbox">
-                <Button value={props.buttonText} createNewTodo={() => props.createNewTodo(text)}/>
+                <Button value={props.buttonText} createNewTodo={() => {
+                    if(text.trim() !== '') 
+                        {
+                            props.createNewTodo(text)
+                        }
+                }}/>
                 <div className="column-hiddenDescription-flexbox-button" onClick={() => clickHandler()}>
                     X
                 </div>

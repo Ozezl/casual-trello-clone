@@ -4,6 +4,7 @@
     border-radius: 3px;
     padding: 5px;
     color: #ffffff;
+    outline: none;
 }
 
 .button button:hover{

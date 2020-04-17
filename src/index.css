@@ -5,7 +5,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: url(./images/photo-1478428036186-d435e23988ea.jfif); 
 }
 
 html,body,#root{
@@ -13,10 +12,18 @@ html,body,#root{
 }
 
 #root{
+  background-image: url(./images/photo-1478428036186-d435e23988ea.jfif); 
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   padding: 20px 15px;
+}
+
+.wrapper,.container{
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  overflow: auto;
 }
 
 /* width */

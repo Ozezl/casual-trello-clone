@@ -1,13 +1,16 @@
-import React,{ useState } from 'react';
-import AddField from '../AddField/AddField'
-import ReactDOM, { render } from 'react-dom';
+import React from 'react';
+import { Draggable } from 'react-beautiful-dnd'; 
 import './Column.css';
 
 function Column(props){
         return(
-            <div className="column">
-                {props.children}
-            </div>
+            <Draggable draggableId={'column' + props.id.toString()} index={props.index}>
+                {provided => (
+                    <div className="column" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
+                        {props.children}
+                    </div>
+                )}
+            </Draggable>    
         );
 }
 
