@@ -11,6 +11,10 @@ html,body,#root{
   height: 100%;
 }
 
+html{
+  overflow: hidden;
+}
+
 #root{
   background-image: url(./images/photo-1478428036186-d435e23988ea.jfif); 
   background-position: center;
@@ -23,7 +27,12 @@ html,body,#root{
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  overflow: auto;
+  height:96%;
+}
+
+.wrapper{
+  overflow-y: auto;
+  outline: none;
 }
 
 /* width */
