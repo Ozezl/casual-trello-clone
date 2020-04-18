@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/casual-trello-clone/static/css/main.1db46075.chunk.css",
+    "main.js": "/casual-trello-clone/static/js/main.2f5b68c2.chunk.js",
+    "main.js.map": "/casual-trello-clone/static/js/main.2f5b68c2.chunk.js.map",
+    "runtime-main.js": "/casual-trello-clone/static/js/runtime-main.fd0949c6.js",
+    "runtime-main.js.map": "/casual-trello-clone/static/js/runtime-main.fd0949c6.js.map",
+    "static/js/2.150d1fe6.chunk.js": "/casual-trello-clone/static/js/2.150d1fe6.chunk.js",
+    "static/js/2.150d1fe6.chunk.js.map": "/casual-trello-clone/static/js/2.150d1fe6.chunk.js.map",
+    "index.html": "/casual-trello-clone/index.html",
+    "precache-manifest.a9dee38e66e1bdfc3baf2dffd38f2cef.js": "/casual-trello-clone/precache-manifest.a9dee38e66e1bdfc3baf2dffd38f2cef.js",
+    "service-worker.js": "/casual-trello-clone/service-worker.js",
+    "static/css/main.1db46075.chunk.css.map": "/casual-trello-clone/static/css/main.1db46075.chunk.css.map",
+    "static/js/2.150d1fe6.chunk.js.LICENSE.txt": "/casual-trello-clone/static/js/2.150d1fe6.chunk.js.LICENSE.txt",
+    "static/media/delete.png": "/casual-trello-clone/static/media/delete.a6a3615c.png",
+    "static/media/index.css": "/casual-trello-clone/static/media/photo-1478428036186-d435e23988ea.756ac79d.jfif"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.fd0949c6.js",
+    "static/js/2.150d1fe6.chunk.js",
+    "static/css/main.1db46075.chunk.css",
+    "static/js/main.2f5b68c2.chunk.js"
+  ]
+}
