@@ -1,4 +1,4 @@
-import React,{ useState } from 'react';
+import React,{ useState,useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import Column from './components/Column/Column';
 import Card from './components/Card/Card';
@@ -9,9 +9,18 @@ import * as serviceWorker from './serviceWorker';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'; 
 import './index.css';
 
+//I really don't know how to fix it other way. :( 
+let Temporary = [];
+let counter = 0; 
+//forgive me lord,for I have sinned.
+
 function Trello(){
     
     const [items,itemsSet] = useState([]);
+   
+    useEffect(()=>{
+      itemsSet(Temporary);
+    },[counter]);
 
     function addItem(newTodo,columnId){
       itemsSet(items.map(val => {
@@ -91,15 +100,16 @@ function Trello(){
         newItems.splice(source.index,1);
         newItems.splice(destination.index,0,items[Number(draggableId.slice(6))-1]);
       
-          const tmp = newItems.map((curr,index) =>{
+          Temporary = newItems.map((curr,index) =>{
             return{
               ...curr,
-              columnId:Number(index + 1)
+              columnId: Number(index+1)
             };
           });
-          
-          itemsSet(tmp);
-        
+
+          itemsSet([]);
+         
+          counter++;
         return;
       }
 
@@ -111,14 +121,13 @@ function Trello(){
         const newTodos = Array.from(start.todos);
         
         newTodos.splice(source.index,1);
-        console.log(Number(draggableId.slice(5)));
         newTodos.splice(destination.index,0,start.todos[Number(draggableId.slice(5))-1]);
         
         start.todos = newTodos.map((curr,index) => 
           {
             return {
               ...curr,
-              id:Number(index + 1), //here
+              id:Number(index + 1),
             }
           }  
         );
@@ -145,7 +154,7 @@ function Trello(){
         {
           ...start,
           todos:startTodos.map((curr,index) => {
-            return{...curr,id:Number(index+1)} //change here
+            return{...curr,id:Number(index+1)} 
           })
         }
       
@@ -158,7 +167,7 @@ function Trello(){
         {
           ...finish,
           todos:finishTodos.map((curr,index) => {
-            return{...curr,id:Number(index+1)}  //here
+            return{...curr,id:Number(index+1)}  
           })
         }
         
