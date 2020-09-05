@@ -1,107 +1,106 @@
-import React,{ useState,useEffect } from 'react';
+import React, { useState,useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import Column from './components/Column/Column';
 import Card from './components/Card/Card';
 import Header from './components/Header/Header';
 import AddColumn from './components/AddColumn/AddColumn';
 import AddField from './components/AddField/AddField';
-import * as serviceWorker from './serviceWorker';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'; 
 import './index.css';
 
 //I really don't know how to fix it other way. :( 
 let Temporary = [];
 let counter = 0; 
-//forgive me lord,for I have sinned.
+//forgive me lord, for I have sinned.
 
 function Trello(){
     
-    const [items,itemsSet] = useState([]);
+    const [items, itemsSet] = useState([]);
    
-    useEffect(()=>{
+    useEffect(() => {
       itemsSet(Temporary);
-    },[counter]);
+    }, [counter]);
 
-    function addItem(newTodo,columnId){
+    function addItem(newTodo, columnId){
       itemsSet(items.map(val => {
-        if(val.columnId === columnId){
+        if (val.columnId === columnId) {
           val.todos.push({
             text: newTodo,
-            id:Number(val.todos.length + 1)
+            id: Number(val.todos.length + 1)
           })
         }
         return val;
       }));
     }
 
-    function addColumn(header){
+    function addColumn(header) {
       let tmp = [...items,
         {
           header: header,
-          todos:[],
-          columnId:Number(items.length + 1)
+          todos: [],
+          columnId: Number(items.length + 1)
         }
       ];
 
-      tmp = tmp.map((curr,index) => {
-        return {...curr,columnId:Number(index+1)}
+      tmp = tmp.map((curr, index) => {
+        return {...curr, columnId: Number(index+1)}
       });
 
       itemsSet(tmp);
     }
 
-    function deleteItem(id,columnId){   //couldn't implement no loop solution
+    function deleteItem(id, columnId){   //couldn't implement no loop solution
       let tmp = [...items];             //future me,please do ;)
-      for(let i = 0;i<tmp.length;i++){
-        if(tmp[i].columnId === columnId){
+      for (let i = 0; i<tmp.length; i++) {
+        if (tmp[i].columnId === columnId) {
           tmp[i].todos = tmp[i].todos.filter(curr => curr.id !== id);
         }   
       }
 
       tmp = tmp.map(curr =>
         {
-          if(curr.columnId === columnId){
+          if (curr.columnId === columnId) {
             return(
               {
                 ...curr,
-                todos: curr.todos.map((val,index) => {
+                todos: curr.todos.map((val, index) => {
                   return ({
                     ...val,
-                    id:Number(index + 1) //here
+                    id: Number(index + 1) 
                   })
                 })
               }
             );}
-            else{
+            else {
               return curr;
             } 
         })
      itemsSet(tmp);
     }
 
-    function deleteColumn(columnId){
-       let tmp = items.filter((val,index) => {
-        if(val.columnId !== columnId) return {...val,columnId:Number(index + 1)};
+    function deleteColumn(columnId) {
+       let tmp = items.filter((val, index) => {
+        if (val.columnId !== columnId) return {...val, columnId: Number(index + 1)};
       });
 
       itemsSet(tmp);
     }
 
     //drag and drop
-    function onDragEnd(result){
+    function onDragEnd(result) {
       const {destination, source, draggableId, type} = result;
 
-      if(!destination) return;
+      if (!destination) return;
       
-      if(destination.droppableId === source.droppableId && destination.index === source.index) return;
+      if (destination.droppableId === source.droppableId && destination.index === source.index) return;
 
-      if(type === 'column'){
+      if (type === 'column') {
         const newItems = Array.from(items);
-        newItems.splice(source.index,1);
-        newItems.splice(destination.index,0,items[Number(draggableId.slice(6))-1]);
+        newItems.splice(source.index, 1);
+        newItems.splice(destination.index, 0, items[Number(draggableId.slice(6)) - 1]);
       
-          Temporary = newItems.map((curr,index) =>{
-            return{
+          Temporary = newItems.map((curr, index) => {
+            return {
               ...curr,
               columnId: Number(index+1)
             };
@@ -117,13 +116,13 @@ function Trello(){
       const start = items[Number(source.droppableId) - 1]; 
       const finish = items[Number(destination.droppableId)- 1]; 
 
-      if(start === finish){
+      if (start === finish) {
         const newTodos = Array.from(start.todos);
         
-        newTodos.splice(source.index,1);
-        newTodos.splice(destination.index,0,start.todos[Number(draggableId.slice(5))-1]);
+        newTodos.splice(source.index, 1);
+        newTodos.splice(destination.index, 0, start.todos[Number(draggableId.slice(5)) - 1]);
         
-        start.todos = newTodos.map((curr,index) => 
+        start.todos = newTodos.map((curr, index) => 
           {
             return {
               ...curr,
@@ -133,10 +132,10 @@ function Trello(){
         );
 
         const newItems = items.map(curr => {
-          if(curr.columnId === start.columnId){
+          if (curr.columnId === start.columnId) {
             return start;
           }
-          else{
+          else {
             return curr;
           }
         })
@@ -147,38 +146,38 @@ function Trello(){
 
       //start column changes
       const startTodos = Array.from(start.todos);
-      startTodos.splice(source.index,1);
+      startTodos.splice(source.index, 1);
 
       //sort todos in a start column
       const startUpd = 
         {
           ...start,
-          todos:startTodos.map((curr,index) => {
-            return{...curr,id:Number(index+1)} 
+          todos: startTodos.map((curr, index) => {
+            return {...curr, id: Number(index + 1)} 
           })
         }
       
       //finish column changes
       const finishTodos = Array.from(finish.todos);
-      finishTodos.splice(destination.index,0,start.todos[Number(draggableId.slice(5)) -1]); 
+      finishTodos.splice(destination.index, 0, start.todos[Number(draggableId.slice(5)) - 1]); 
 
       //sort todos in a finish column
       const finishUpd = 
         {
           ...finish,
-          todos:finishTodos.map((curr,index) => {
-            return{...curr,id:Number(index+1)}  
+          todos: finishTodos.map((curr, index) => {
+            return {...curr, id: Number(index + 1)}  
           })
         }
         
-      itemsSet(items.map((val,index) => {
-        if(index === Number(source.droppableId) - 1 ){ 
+      itemsSet(items.map((val, index) => {
+        if (index === Number(source.droppableId) - 1) { 
           return startUpd;
         }
-        if(index === Number(destination.droppableId) - 1){ 
+        if (index === Number(destination.droppableId) - 1) { 
           return finishUpd;
         }
-        else{
+        else {
           return val;
         }
       }));
@@ -190,21 +189,21 @@ function Trello(){
             <Droppable droppableId = "smpl" direction="horizontal" type="column">
               {provided => (
                 <div className="container" {...provided.droppableProps} ref={provided.innerRef}>
-                {items.map((curr,index) =>
+                {items.map((curr, index) =>
                   (
                       <Column key={curr.columnId} id={curr.columnId} index={index}>   
                         <Header value={curr.header} columnId={curr.columnId} deleteColumn={(columnId) => deleteColumn(columnId)}/>
                         <Droppable droppableId={curr.columnId.toString()} type="task">
                           {provided => (
                             <div className="overflowCards" ref={provided.innerRef} {...provided.droppableProps}>
-                              {curr.todos.map((val,index) => 
-                                (<Card key={val.id} value={val.text} id={val.id} index={index} columnId={curr.columnId} deleteItem={(id,columnId) => deleteItem(id,columnId)}/>)       
+                              {curr.todos.map((val, index) => 
+                                (<Card key={val.id} value={val.text} id={val.id} index={index} columnId={curr.columnId} deleteItem={(id, columnId) => deleteItem(id, columnId)}/>)       
                               )}
                               {provided.placeholder}
                             </div>
                           )}
                         </Droppable>
-                        <AddField createNewTodo={(text)=> addItem(text,curr.columnId)} buttonText="Add Card" panelText="+ Add a card"/>
+                        <AddField createNewTodo={(text)=> addItem(text, curr.columnId)} buttonText="Add Card" panelText="+ Add a card"/>
                       </Column>
                 ))}
                 {provided.placeholder}
@@ -224,5 +223,4 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-serviceWorker.unregister();
 
